@@ -60,9 +60,6 @@ if ( isset($_POST['email']) && isset($_POST['pass']) ) {
 // Fall through into the View
 }
 ?>
-
-
-
 <?php 
 if ( isset($_POST['register']) )
 {
@@ -141,28 +138,24 @@ if ( $failure !== false ) {
 // Fall through into the View
 }
 ?>
-
-
 <?php 
 if ( isset($_POST['s1']) )
 {
-
-
 
 $failure = false;  // If we have no POST data
 
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['name1']) && isset($_POST['email1']) && isset($_POST['cell1']) && isset($_POST['feedback']) && isset($_POST['permission1'])) {
   if ( strlen($_POST['name1']) < 1 || strlen($_POST['email1']) < 1 || strlen($_POST['cell1']) < 1 || strlen($_POST['feedback']) < 1 || strlen($_POST['permission1']) < 1) {
-      $_SESSION['error'] = "All fields are required";
       header("Location: index.php");
+      $_SESSION['error'] = "All fields are required";
       return;
       
   } 
 
   if ( strpos(($_POST['email1']),'@' ) === false ) {
-    $_SESSION['error'] = "Email must have an at-sign (@)";
     header("Location: index.php");
+     $_SESSION['error'] = "Email must have an at-sign (@)";
     return;
 }   
 
@@ -201,8 +194,6 @@ if ( $failure !== false ) {
 // Fall through into the View
 }
 ?>
-
-
 <?php 
 if ( isset($_POST['s2']) )
 {
@@ -214,15 +205,16 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['name2']) && isset($_POST['email2']) && isset($_POST['cell2']) && isset($_POST['feedback1']) && isset($_POST['permission2'])) {
   if ( strlen($_POST['name2']) < 1 || strlen($_POST['email2']) < 1 || strlen($_POST['cell2']) < 1 || strlen($_POST['feedback1']) < 1 || strlen($_POST['permission2']) < 1) {
-      $_SESSION['error'] = "All fields are required";
       header("Location: index.php");
+      $_SESSION['error'] = "All fields are required";
       return;
       
   } 
 
   if ( strpos(($_POST['email2']),'@' ) === false ) {
-    $_SESSION['error'] = "Email must have an at-sign (@)";
     header("Location: index.php");
+    $_SESSION['error'] = "Email must have an at-sign (@)";
+    
     return;
 }   
 
@@ -244,7 +236,7 @@ if ( isset($_POST['name2']) && isset($_POST['email2']) && isset($_POST['cell2'])
         ':cs10' => $_POST['permission2'],
         )
       );
-     
+           
           header("Location: index.php");  
           $_SESSION['success'] = "Thank you for contacting!";
           return;
