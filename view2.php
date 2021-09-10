@@ -11,7 +11,7 @@ if ( isset($_POST['cancel'] ) ) {
  <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Lebenslauf aus der Datenbank anzeigen</title>
+<title>View Resume from Database</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -35,10 +35,10 @@ if ( isset($_POST['cancel'] ) ) {
           <div class="collapse navbar-collapse" id="Navbar" >
         
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="./index.php"><span class="fa fa-home fa-lg"></span > Startseite</a></li>
-            <li class="nav-item"><a class="nav-link" href="./add.php"><span class="fa fa-plus fa-lg"></span> Lebenslauf hinzufügen</a></li>
-            <li class="nav-item"><a class="nav-link active" href="./list.php" ><span class="fa fa-list fa-lg"></span>Lebenslauf Datenbank</a></li>
-            <li class="nav-item"><a class="nav-link" href="./contactus.php"><span class="fa fa-address-card fa-lg"></span >Kontakt</a></li>
+          <li class="nav-item"><a class="nav-link" href="./index2.php"><span class="fa fa-home fa-lg"></span > Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="./add2.php"><span class="fa fa-plus fa-lg"></span> Add Resume</a></li>
+            <li class="nav-item"><a class="nav-link  active" href="./list2.php" ><span class="fa fa-list fa-lg"></span>Resume Database</a></li>
+            <li class="nav-item"><a class="nav-link" href="./contactus2.php"><span class="fa fa-address-card fa-lg"></span >Contact</a></li>
         
         </ul>
         <?php
@@ -47,8 +47,8 @@ if ( isset($_POST['cancel'] ) ) {
                 
 
                       echo '<span class="navbar-text" >
-                      <a href="logout.php">
-                      <span class="fa fa-sign-out"></span> Abmeldung</a>
+                      <a href="logout2.php">
+                      <span class="fa fa-sign-out"></span> Logout</a>
                   </span>';
                       
                   
@@ -63,23 +63,23 @@ if ( isset($_POST['cancel'] ) ) {
      <div class=container>
                 <div class="row">
                      <ol class="col-12 breadcrumb">
-                            <li class="breadcrumb-item"><a  href="./index.php" >Startseite</a></li>
-                            <li class="breadcrumb-item active" >Lebenslauf ansehen</li>
+                            <li class="breadcrumb-item"><a  href="./index.php" >Home</a></li>
+                            <li class="breadcrumb-item active" >View Resume</li>
                     </ol>
             </div>
 
     <?php
      $c=  $_GET['profile_id'] ;
      $pro1= $pdo->query("SELECT first_name, last_name, headline,email,summary FROM profile WHERE profile_id=$c");
-     echo  ( "<div class='container'><div class='row row-content align-items-center' id='reserve' ><div class='col-12  offset-sm-1 col-sm-10'><div class='card'><h3 class='card-header modal-header text-black'>Lebenslauf ansehen</h3><div class='card-body modal-body'>");
+     echo  ( "<div class='container'><div class='row row-content align-items-center' id='reserve' ><div class='col-12  offset-sm-1 col-sm-10'><div class='card'><h3 class='card-header modal-header text-black'>View Resume</h3><div class='card-body modal-body'>");
      while  ($row1 =$pro1->fetch(PDO::FETCH_ASSOC))  
     
     { 
-        echo  ( "<div class='container mt5'><p> <strong>   Vorname : </strong>".htmlentities($row1['first_name'])."</p>");
-        echo  ( "<p> <strong>   Nachname : </strong>".htmlentities($row1['last_name'])."</p>");
-        echo  ( "<p> <strong>   E-Mail : </strong>".htmlentities($row1['email'])."</p>");
-        echo  ( "<p> <strong>   Überschrift : </p>  </strong>".htmlentities($row1['headline'])."<p> </p>");
-        echo  ( "<p> <strong>   Zusammenfassung : </p>  </strong>".htmlentities($row1['summary'])."<p> </p> </div>");
+        echo  ( "<div class='container mt5'><p> <strong>   First Name : </strong>".htmlentities($row1['first_name'])."</p>");
+        echo  ( "<p> <strong>   Last Name : </strong>".htmlentities($row1['last_name'])."</p>");
+        echo  ( "<p> <strong>   Email : </strong>".htmlentities($row1['email'])."</p>");
+        echo  ( "<p> <strong>   Headline : </p>  </strong>".htmlentities($row1['headline'])."<p> </p>");
+        echo  ( "<p> <strong>   Summary : </p>  </strong>".htmlentities($row1['summary'])."<p> </p> </div>");
     
     
     
@@ -93,52 +93,52 @@ if ( isset($_POST['cancel'] ) ) {
 
 
                             
-    echo '<div class="container"><div><p> <strong>  Benennungen : </strong> </p>';
+    echo '<div class="container"><div><p> <strong>  Positions : </strong> </p>';
     $stmt = $pdo->prepare("SELECT * FROM position where profile_id = :xyz");
     $stmt->execute(array(":xyz" => $_GET['profile_id']));
     $row1 = $stmt->fetchAll();
      
     $rank=1;
     foreach ($row1 as $row)
-    {echo  ( " <ul> <li> <strong>   Jahr : </strong>".htmlentities($row['year'])."<strong>  
-        Beschreibung : </strong>".htmlentities($row['description'])." </li> </ul>" );
+    {echo  ( " <ul> <li> <strong>   year : </strong>".htmlentities($row['year'])."<strong>  
+         Description : </strong>".htmlentities($row['description'])." </li> </ul>" );
         $rank++;
     }
     
-    echo "</div><div class=' mt5'><p> <strong>  Bildung : </strong> </p>";
+    echo "</div><div class=' mt5'><p> <strong>  Education : </strong> </p>";
     $stmt2= $pdo->prepare("SELECT name ,year  FROM education JOIN institution ON education.institution_id=institution.institution_id WHERE profile_id=:hello");
     $stmt2->execute(array(":hello" => $_GET['profile_id']));
     $row2 = $stmt2->fetchAll();
     
     foreach ($row2 as $rows)
-    {echo  ( " <ul> <li> <strong>   Jahr : </strong>".htmlentities($rows['year'])."<strong>  
-        Einrichtung : </strong>".htmlentities($rows['name'])." </li> </ul>" );
+    {echo  ( " <ul> <li> <strong>   year : </strong>".htmlentities($rows['year'])."<strong>  
+         School : </strong>".htmlentities($rows['name'])." </li> </ul>" );
         $rank++;
     }
-    echo "</div></div><div class='container mt5'><a role='button' class='btn btn-primary btn-md' href='list.php'>Erledigt</a> </div></div></div></div></div></div></div>";
+    echo "</div></div><div class='container mt5'><a role='button' class='btn btn-primary btn-md' href='list2.php'>Done</a> </div></div></div></div></div></div></div>";
     ?>
 
 
 
   
-  <footer class="footer mt10">
+<footer class="footer mt10" >
         <div class="container">
             <div class="row">             
                 <div class="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="./index.php">Startseite</a></li>
-                        <li><a href="./add.php">Lebenslauf hinzufügen</a></li>
-                        <li><a href="./list.php">Lebenslauf Datenbank</a></li>
-                        <li><a href="./contactus.php">Kontaktieren Sie uns</a></li>
+                        <li><a href="./index.php">Home</a></li>
+                        <li><a href="./add.php">Add Resume</a></li>
+                        <li><a href="./list.php">Resume Database</a></li>
+                        <li><a href="./contactus.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-7 col-sm-5">
-                    <h5>Unsere Adresse</h5>
+                    <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
-		              Deutschland<br>
+		              Germany<br>
                       <i class="fa fa-phone fa-lg"></i>: +4917676497855<br>
                       <i class="fa fa-fax fa-lg"></i>: +492 8765 4321<br>
                       <i class="fa fa-envelope fa-lg"></i>: 
@@ -158,7 +158,7 @@ if ( isset($_POST['cancel'] ) ) {
            </div>
            <div class="row justify-content-center">             
                 <div class="col-auto">
-                    <p>© Urheberrecht 2021 Md Shohanoor Rahman</p>
+                    <p>© Copyright 2021 Md Shohanoor Rahman</p>
                 </div>
            </div>
         </div>

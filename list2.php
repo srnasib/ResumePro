@@ -3,12 +3,12 @@ session_start();
 require_once "pdo.php";
 if ( isset($_POST['cancel'] ) ) {
   // Redirect the browser to game.php
-  header("Location: index.php");
+  header("Location: index2.php");
   return;
 }
 if ( !isset($_SESSION['name']))
-{$_SESSION['success'] = "Bitte anmelden";
-header("Location:index.php");
+{$_SESSION['success'] = "Please log in";
+header("Location:index2.php");
 return; 
 }
 ?>
@@ -21,14 +21,14 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['email']) && isset($_POST['pass']) ) {
   if ( strlen($_POST['email']) < 1 || strlen($_POST['pass']) < 1 ) {
-      $_SESSION['error'] = "E-Mail und Passwort sind erforderlich";
-      header("Location: list.php");
+      $_SESSION['error'] = "Email and password are required";
+      header("Location: list2.php");
       return;
       
   } 
   else if ( strpos(($_POST['email']),'@' ) === false ) {
-      $_SESSION['error'] = "E-Mail muss ein at-Zeichen (@) enthalten";
-      header("Location: list.php");
+      $_SESSION['error'] = "Email must have an at-sign (@)";
+      header("Location: list2.php");
       return;
   }    
   
@@ -46,15 +46,15 @@ if ( isset($_POST['email']) && isset($_POST['pass']) ) {
           $_SESSION['user_id'] = $row['user_id'];  
           // Redirect the browser to index.php 
           
-          header("Location: list.php");  
-          $_SESSION['success'] = "Anmeldung erfolgreich";
+          header("Location: list2.php");  
+          $_SESSION['success'] = "Login Successful";
           return;
           error_log("Login success ".$_row['user_id']);
           return; }
 
       else {
-              $_SESSION['error'] = "Falsches Passwort";
-              header("Location: list.php");
+              $_SESSION['error'] = "Incorrect password";
+              header("Location: list2.php");
               return;
            error_log("Login fail ".$_row['user_id']." $check");
       }
@@ -92,10 +92,10 @@ try {
     console.log("Validating pw="+pw);
 
     if (pw == null || pw == ""|| eml==null || eml=="" ) {
-        alert("Beide Felder müssen ausgefüllt werden");
+        alert("Both fields must be filled out");
         return false; }
      if  (eml.indexOf('@') == -1)
-  { alert("Ungültige E-Mail Adresse");
+  { alert("invalid email address");
   return false; } 
 else
    {return true; }
@@ -121,7 +121,7 @@ if ( $failure !== false ) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ResumePro Datenbank-Betrachter</title>
+<title>ResumePro Database Viewer</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -145,10 +145,10 @@ if ( $failure !== false ) {
           <div class="collapse navbar-collapse" id="Navbar" >
         
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link active" href="./index.php"><span class="fa fa-home fa-lg"></span > Startseite</a></li>
-            <li class="nav-item"><a class="nav-link" href="./add.php"><span class="fa fa-plus fa-lg"></span> Lebenslauf hinzufügen</a></li>
-            <li class="nav-item"><a class="nav-link active" href="./list.php" ><span class="fa fa-list fa-lg"></span>Lebenslauf Datenbank</a></li>
-            <li class="nav-item"><a class="nav-link" href="./contactus.php"><span class="fa fa-address-card fa-lg"></span >Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link" href="./index2.php"><span class="fa fa-home fa-lg"></span > Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="./add2.php"><span class="fa fa-plus fa-lg"></span> Add Resume</a></li>
+            <li class="nav-item"><a class="nav-link  active" href="./list2.php" ><span class="fa fa-list fa-lg"></span>Resume Database</a></li>
+            <li class="nav-item"><a class="nav-link" href="./contactus2.php"><span class="fa fa-address-card fa-lg"></span >Contact</a></li>
         
         </ul>
         <?php
@@ -166,8 +166,8 @@ if ( $failure !== false ) {
                 
 
                       echo '<span class="navbar-text" >
-                      <a href="logout.php">
-                      <span class="fa fa-sign-out"></span> Abmeldung</a>
+                      <a href="logout2.php">
+                      <span class="fa fa-sign-out"></span> Logout</a>
                   </span>';
                       
                   
@@ -182,8 +182,8 @@ if ( $failure !== false ) {
             <div class=container>
                 <div class="row">
                      <ol class="col-12 breadcrumb">
-                            <li class="breadcrumb-item"><a  href="./index.php" >Startseite</a></li>
-                            <li class="breadcrumb-item active" >Lebenslauf Liste</li>
+                            <li class="breadcrumb-item"><a  href="./index2.php" >Home</a></li>
+                            <li class="breadcrumb-item active" >Resume List</li>
                     </ol>
             </div>
 
@@ -222,7 +222,7 @@ if ( isset($_SESSION['success']) ) {
                    echo '<thead>';
                    echo '<tr>';
                    echo '<th>Name</th>';
-                   echo '<th>Beschreibung</th>';
+                   echo '<th>Description</th>';
                    echo '</tr>';
                    echo '</thead>';
                    echo '<tbody>';
@@ -232,7 +232,7 @@ if ( isset($_SESSION['success']) ) {
                    echo '<tr>';
                
                    $e=  ((htmlentities($row['first_name']))." ".htmlentities($row['last_name']));
-                   echo('<td> <a href="view.php?profile_id='.$row['profile_id'].'">'.$e.'</a></td>');
+                   echo('<td> <a href="view2.php?profile_id='.$row['profile_id'].'">'.$e.'</a></td>');
                    echo '<td>'.htmlentities($row['headline']).'</td>';
                    
                    echo '</tr>';
@@ -273,8 +273,8 @@ if ( isset($_SESSION['success']) ) {
                    echo '<thead>';
                    echo '<tr class="modal-body">';
                    echo '<th>Name</th>';
-                   echo '<th>Beschreibung</th>';
-                   echo '<th>Aktion</th>';
+                   echo '<th>Description</th>';
+                   echo '<th>Action</th>';
                    echo '</tr>';
                    echo '</thead>';
                    echo '<tbody>';
@@ -284,9 +284,9 @@ if ( isset($_SESSION['success']) ) {
                    echo '<tr>';
                
                    $f=  ((htmlentities($row2['first_name']))." ".htmlentities($row2['last_name']));
-                   echo('<td> <a href="view.php?profile_id='.$row2['profile_id'].'">'.$f.'</a></td>');
+                   echo('<td> <a href="view2.php?profile_id='.$row2['profile_id'].'">'.$f.'</a></td>');
                    echo '<td>'.htmlentities($row2['headline']).'</td>';
-                   echo '<td>'.'<a href="edit.php?profile_id='.$row2['profile_id'].'">Bearbeiten</a> / <a href="delete.php?profile_id='.$row2['profile_id'].'">Löschen</a> '.'</td>';
+                   echo '<td>'.'<a href="edit2.php?profile_id='.$row2['profile_id'].'">Edit</a> / <a href="delete2.php?profile_id='.$row2['profile_id'].'">Delete</a> '.'</td>';
                    
                    echo '</tr>';
                     }
@@ -303,12 +303,19 @@ if ( isset($_SESSION['success']) ) {
             ?>
 
 
+
+
+
+
+
+
+
 <div id="loginModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" role="content">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Anmeldung </h4>
+                    <h4 class="modal-title">Login </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -316,37 +323,31 @@ if ( isset($_SESSION['success']) ) {
                     <form method="POST">
                         <div class="form-row">
                             <div class="form-group col-sm-4">
-                                    <label class="sr-only" for="nam">E-Mail Adresse</label>
-                                    <input type="text"  name="email"  class="form-control form-control-sm mr-1" id="nam" placeholder="E-Mail eingeben">
+                                    <label class="sr-only" for="nam">Email address</label>
+                                    <input type="text"  name="email"  class="form-control form-control-sm mr-1" id="nam" placeholder="Enter email">
                             </div>
                             <div class="form-group col-sm-4">
-                                <label class="sr-only" for="id_1723">Passwort</label>
-                                <input type="password" name="pass" class="form-control form-control-sm mr-1" id="id_1723" placeholder="Passwort">
+                                <label class="sr-only" for="id_1723">Password</label>
+                                <input type="password" name="pass" class="form-control form-control-sm mr-1" id="id_1723" placeholder="Password">
                             </div>
                             <div class="col-sm-auto">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label"> Erinnere mich
+                                    <label class="form-check-label"> Remember me
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             
-                            <input type="submit" name="login"    class="btn btn-primary btn-sm ml-1" value="Einloggen">
-                            <input type="submit" class="btn btn-secondary btn-sm ml-auto" name="cancel" value="Abbrechen" data-dismiss="modal">    
+                            <input type="submit" onclick="return doValidate();"  class="btn btn-primary btn-sm ml-1" value="Log In">
+                            <input type="submit" class="btn btn-secondary btn-sm ml-auto" name="cancel" value="Cancel" data-dismiss="modal">    
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
-
 
 </body>
 <footer class="footer">
@@ -355,18 +356,18 @@ if ( isset($_SESSION['success']) ) {
                 <div class="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="./index.php">Startseite</a></li>
-                        <li><a href="./add.php">Lebenslauf hinzufügen</a></li>
-                        <li><a href="./list.php">Lebenslauf Datenbank</a></li>
-                        <li><a href="./contactus.php">Kontaktieren Sie uns</a></li>
+                        <li><a href="./index2.php">Home</a></li>
+                        <li><a href="./add2.php">Add Resume</a></li>
+                        <li><a href="./list2.php">Resume Database</a></li>
+                        <li><a href="./contactus2.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-7 col-sm-5">
-                    <h5>Unsere Adresse</h5>
+                    <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
-		              Deutschland<br>
+		              Germany<br>
                       <i class="fa fa-phone fa-lg"></i>: +4917676497855<br>
                       <i class="fa fa-fax fa-lg"></i>: +492 8765 4321<br>
                       <i class="fa fa-envelope fa-lg"></i>: 
@@ -386,7 +387,7 @@ if ( isset($_SESSION['success']) ) {
            </div>
            <div class="row justify-content-center">             
                 <div class="col-auto">
-                    <p>© Urheberrecht 2021 Md Shohanoor Rahman</p>
+                    <p>© Copyright 2021 Md Shohanoor Rahman</p>
                 </div>
            </div>
         </div>

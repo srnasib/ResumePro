@@ -1,9 +1,12 @@
 <?php
+
 session_start();
 require_once "pdo.php";
+require_once "head.php";
+
 if ( ! isset($_SESSION['name'])   ) {
-  $_SESSION['success'] = "Bitte anmelden";
-  header("Location: index.php");
+  $_SESSION['success'] = "Please log in";
+  header("Location: index2.php");
   return;
    
 }
@@ -11,7 +14,7 @@ if ( ! isset($_SESSION['name'])   ) {
  
 if ( isset($_POST['cancel'] ) ) {
   // Redirect the browser to login.php
-  header("Location: index.php");
+  header("Location: index2.php");
   return;
 }
 
@@ -20,13 +23,13 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
 {
 
     if ( strlen($_POST['first_name']) <1  || strlen($_POST['last_name']) <1 || strlen($_POST['email']) <1  || strlen($_POST['headline'])<1 || strlen($_POST['summary']) <1 )
- { $_SESSION['error'] = "Alle Felder sind erforderlich";
+ { $_SESSION['error'] = "All fields are required";
     header("Location: edit.php?profile_id=".$_GET['profile_id']);
     return;
  }
 
     else if ( strpos(($_POST['email']),'@' ) === false )
-     {   $_SESSION['error'] = "E-Mail Adresse muss @ enthalten"; 
+     {   $_SESSION['error'] = "Email address must contain @"; 
         header("Location: edit.php?profile_id=".$_GET['profile_id']);
         return;
     }
@@ -124,8 +127,8 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
           
           $rank++;}
  
-        $_SESSION['success'] = "Datensatz aktualisiert";
-        header("Location: index.php");
+        $_SESSION['success'] = "Record Updated";
+        header("Location: index2.php");
         return;
   
       }
@@ -133,13 +136,15 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
 }
 
 if ( ! isset($_GET['profile_id']) ) {
-    $_SESSION['error'] = "Fehlende profile_id";
-    header("Location: index.php");
+    $_SESSION['error'] = "Missing profile_id";
+    header("Location: index2.php");
     return;
   }
 
   
-
+  if ( isset($_SESSION['error']) ) {
+   echo('<p style="color: red;">'.htmlentities($_SESSION['error'])."</p>\n");
+     unset($_SESSION['error']);}
  
      function validatePos() {
          for($i=1; $i<=9; $i++) {
@@ -150,11 +155,11 @@ if ( ! isset($_GET['profile_id']) ) {
            $desc = $_POST['desc'.$i];
        
            if ( strlen($year) == 0 || strlen($desc) == 0 ) {
-             return "Alle Felder sind erforderlich";
+             return "All fields are required";
            }
        
            if ( ! is_numeric($year) ) {
-             return "Das Jahr der Benennung muss numerisch sein";
+             return "Position year must be numeric";
            }
          }
          return true;
@@ -169,11 +174,11 @@ if ( ! isset($_GET['profile_id']) ) {
            $school = $_POST['school'.$i];
        
            if ( strlen($year1) == 0 || strlen($school) == 0 ) {
-             return "Alle Felder sind erforderlich";
+             return "All fields are required";
            }
        
            if ( ! is_numeric($year1) ) {
-             return "Bildungsjahr muss numerisch sein";
+             return "Education year must be numeric";
            }
          }
          return true;
@@ -198,8 +203,8 @@ if ( ! isset($_GET['profile_id']) ) {
 
 
   if ( $row === false ) {
-      $_SESSION['error'] = 'Falscher Wert für profile_id';
-      header( 'Location: index.php' ) ;
+      $_SESSION['error'] = 'Bad value for profile_id';
+      header( 'Location: index2.php' ) ;
       return;
   } 
 
@@ -216,12 +221,10 @@ $f = htmlentities($row['user_id']);
 ?>
 
 
-<?php require_once "head.php"; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Bearbeiten eines Lebenslaufs in ResumePro</title>
+<title>Edit a Resume in ResumePro</title>
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -245,10 +248,10 @@ $f = htmlentities($row['user_id']);
           <div class="collapse navbar-collapse" id="Navbar" >
         
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link " href="./index.php"><span class="fa fa-home fa-lg"></span > Startseite</a></li>
-            <li class="nav-item"><a class="nav-link active" href="./add.php"><span class="fa fa-plus fa-lg"></span> Lebenslauf hinzufügen</a></li>
-            <li class="nav-item"><a class="nav-link" href="./list.php" ><span class="fa fa-list fa-lg"></span>Lebenslauf Datenbank</a></li>
-            <li class="nav-item"><a class="nav-link" href="./contactus.php"><span class="fa fa-address-card fa-lg"></span >Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link" href="./index2.php"><span class="fa fa-home fa-lg"></span > Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="./add2.php"><span class="fa fa-plus fa-lg"></span> Add Resume</a></li>
+            <li class="nav-item"><a class="nav-link  " href="./list2.php" ><span class="fa fa-list fa-lg"></span>Resume Database</a></li>
+            <li class="nav-item"><a class="nav-link" href="./contactus2.php"><span class="fa fa-address-card fa-lg"></span >Contact</a></li>
         
         </ul>
         <?php
@@ -266,8 +269,8 @@ $f = htmlentities($row['user_id']);
                 
 
                       echo '<span class="navbar-text" >
-                      <a href="logout.php">
-                      <span class="fa fa-sign-out"></span>Abmeldung</a>
+                      <a href="logout2.php">
+                      <span class="fa fa-sign-out"></span> Logout</a>
                   </span>';
                       
                   
@@ -282,21 +285,10 @@ $f = htmlentities($row['user_id']);
      <div class=container>
                 <div class="row">
                      <ol class="col-12 breadcrumb">
-                            <li class="breadcrumb-item"><a  href="./index.php" >Startseite</a></li>
-                            <li class="breadcrumb-item active" >Lebenslauf bearbeiten</li>
+                            <li class="breadcrumb-item"><a  href="./index2.php" >Home</a></li>
+                            <li class="breadcrumb-item active" >Edit Resume</li>
                     </ol>
             </div>
-            
-            
-<?php
-    if ( isset($_SESSION['success']) ) {
-    echo('<div class="container"> <div  class="col-12 col-sm-6 col-md-6" style="color: green;"><h4>'.htmlentities($_SESSION['success']).'</h4></div></div>');
-    unset($_SESSION['success']);
-  }
-  if ( isset($_SESSION['error']) ) {
-    echo('<div class="container"> <div  class="col-12 col-sm-6 col-md-6" style="color: red;"><h4>'.htmlentities($_SESSION['error']).'</h4></div></div>');
-    unset($_SESSION['error']);
-  }?>
 
 
 
@@ -304,7 +296,7 @@ $f = htmlentities($row['user_id']);
 <div class="row row-content align-items-center" id="reserve" >
             <div class="col-12  offset-sm-1 col-sm-10">
                 <div class="card">
-                    <h3 class="card-header modal-header text-black">Lebenslauf bearbeiten</h3>
+                    <h3 class="card-header modal-header text-black">Edit Resume</h3>
                     <div class="card-body modal-body">
                         
                  
@@ -312,13 +304,13 @@ $f = htmlentities($row['user_id']);
 
 <input type="hidden" name="user_id" id="nam" value="<?=$f ?>" size ="40" ><br/>
 <div class="form-group col-sm-4">
-<label for="fn"> <b>Vorname :</b>   </label>
+<label for="fn"> <b>First Name :</b>   </label>
 </div>
 <div class="form-group col-sm-6">
 <input type="text" name="first_name" id="fn" size ="40" value="<?=$a ?>" class="form-control form-control-sm mr-1"><br/>
 </div>
 <div class="form-group col-sm-4">
-<label for="ln"><b>Nachname :</b>   </label>
+<label for="ln"><b>Last Name :</b>   </label>
 </div>
 <div class="form-group col-sm-6">
 <input type="text" name="last_name" id="ln" size ="40" value="<?=$b ?>" class="form-control form-control-sm mr-1"><br/>
@@ -330,20 +322,20 @@ $f = htmlentities($row['user_id']);
 <input type="text" name="email" id="em" size ="30" value="<?=$c ?>" class="form-control form-control-sm mr-1" placeholder="Enter email"><br/>
 </div>
 <div class="form-group col-sm-4">
-<label for="hl"><b>Überschrift :</b>   </label>
+<label for="hl"><b>Headline :</b>   </label>
 </div>
 <div class="form-group col-sm-6">
 <input type="text" name="headline" id="hl" size ="45" value="<?=$d ?>" class="form-control form-control-sm mr-1" ><br/>
 </div>
 <div class="form-group col-sm-4">
-<p> <strong>  Zusammenfassung : </strong> </p>
+<p> <strong>  Summary : </strong> </p>
 </div>
 <div class="form-group col-sm-6">
 <textarea name="summary"  rows="10" cols="40"  class="form-control form-control-sm mr-1" ><?= $e ?> </textarea> <br/>
 </div>
 
 <div class="form-group col-sm-4">
-<b>Bildung:</b>
+<b>Education:</b>
 </div>
 <div class="form-group col-sm-4">
 <input type="submit" id="addEdu" value="+" class="form-control form-control-sm mr-1"> 
@@ -355,10 +347,10 @@ $f = htmlentities($row['user_id']);
             $rank = 1;
             foreach ($row2 as $rows) {
                 echo "<div class=row id= education" . $rank . "> 
-                <div class='form-group col-sm-4'> <b>Jahr:</b> </div>
+                <div class='form-group col-sm-4'> <b>Year:</b> </div>
                 <div class='form-group col-sm-6'><input type=text class='form-control form-control-sm mr-1' name=year1 value=".$rows['year']."> </div>
                 <div class='form-group col-sm-2'><input type=button value='-'  onclick= $('#education". $rank ."').remove();return false;> </div>
-                <div class='form-group col-sm-4'> <b>Einrichtung:</b> </div>
+                <div class='form-group col-sm-4'> <b>School:</b> </div>
                 <div class='form-group col-sm-6'> <input type=text class='form-control form-control-sm mr-1'  name=school". $rank ."'). size=50 value=".$rows['name']." class=school ></div>
 </div>";
                 $rank++;
@@ -366,7 +358,7 @@ $f = htmlentities($row['user_id']);
 
      </div>
      <div class="form-group col-sm-4">
-     <b>Benennungen:</b>
+     <b>Position:</b>
      </div>
      <div class="form-group col-sm-4">
      <input type="submit" id="addPos" value="+" class="form-control form-control-sm mr-1"> 
@@ -378,10 +370,10 @@ $f = htmlentities($row['user_id']);
             $rank = 1;
             foreach ($row1 as $rown) {
                 echo "<div class=row id= position" . $rank . ">
-                <div class='form-group col-sm-4'> <b>Jahr:</b> </div>
+                <div class='form-group col-sm-4'> <b>Year:</b> </div>
                 <div class='form-group col-sm-6'> <input type=text  class='form-control form-control-sm mr-1' name=year value=".$rown['year']."> </div>
                 <div class='form-group col-sm-2'> <input type=button value='-'  onclick= $('#position". $rank ."').remove();return false;></div>
-                <div class='form-group col-sm-4'> <b>Beschreibung:</b> </div>
+                <div class='form-group col-sm-4'> <b>Description:</b> </div>
                 <div class='form-group col-sm-6'><textarea name=desc". $rank ."'). class='form-control form-control-sm mr-1' rows=8 cols=80>".$rown['description']."</textarea></div>
                 </div>";
                 $rank++;
@@ -390,8 +382,8 @@ $f = htmlentities($row['user_id']);
 
 
 <div class="form-group col-sm-6">
-<input type="submit"  value="Speichern" onclick="return doValidate();" class="btn btn-warning btn-sm ml-1">
-<input type="submit" name="cancel" value="Abbrechen" class="btn btn-warning btn-sm ml-1">
+<input type="submit"  value="Save" onclick="return doValidate();" class="btn btn-warning btn-sm ml-1">
+<input type="submit" name="cancel" value="Cancel" class="btn btn-warning btn-sm ml-1">
 </div>
 </p>
 </form>
@@ -409,7 +401,7 @@ $f = htmlentities($row['user_id']);
                 // http://api.jquery.com/event.preventdefault/
                 event.preventDefault();
                 if (countEdu >= 9) {
-                    alert("Maximal neun Bildungseinträge überschritten");
+                    alert("Maximum of nine education entries exceeded");
                     return;
                 }
                 countEdu++;
@@ -417,10 +409,10 @@ $f = htmlentities($row['user_id']);
                 
                 $('#education_fields').append(
                     '<div class=row id="education' + countEdu + '"> \
-                    <div class="form-group col-sm-4"> <b>Jahr:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="year1' + countEdu + '" value="" /> </div> \
+                    <div class="form-group col-sm-4"> <b>Year:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="year1' + countEdu + '" value="" /> </div> \
                     <div class="form-group col-sm-2"> <input type="button" value="-" \
                 onclick="$(\'#education' + countEdu + '\').remove();return false;"> </div> \
-                <div class="form-group col-sm-4"><b>Einrichtung:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="school' + countEdu + '" value="" size="50" class="school" /></div> \
+                <div class="form-group col-sm-4"><b>School:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="school' + countEdu + '" value="" size="50" class="school" /></div> \
             </div>');
             $('.school').autocomplete({ source: "school.php" });
             });
@@ -435,17 +427,17 @@ $f = htmlentities($row['user_id']);
                 // http://api.jquery.com/event.preventdefault/
                 event.preventDefault();
                 if (countPos >= 9) {
-                    alert("Überschreitung der Höchstzahl von neun Bezeichnungseinträgen");
+                    alert("Maximum of nine position entries exceeded");
                     return;
                 }
                 countPos++;
                 window.console && console.log("Adding position " + countPos);
                 $('#position_fields').append(
                     '<div class=row id="position' + countPos + '"> \
-                    <div class="form-group col-sm-4"><b>Jahr:</b></div> <div class="form-group col-sm-6">  <input type="text" class="form-control form-control-sm mr-1" name="year' + countPos + '" value="" /></div> \
+                    <div class="form-group col-sm-4"><b>Year:</b></div> <div class="form-group col-sm-6">  <input type="text" class="form-control form-control-sm mr-1" name="year' + countPos + '" value="" /></div> \
                     <div class="form-group col-sm-2"> <input type="button" value="-" \
                 onclick="$(\'#position' + countPos + '\').remove();return false;"></div> \
-                <div class="form-group col-sm-4"><b>Beschreibung:</b> </div> <div class="form-group col-sm-6"> <textarea class="form-control form-control-sm mr-1" name="desc' + countPos + '" rows="8" cols="80"></textarea></div>\
+                <div class="form-group col-sm-4"><b>Description:</b> </div> <div class="form-group col-sm-6"> <textarea class="form-control form-control-sm mr-1" name="desc' + countPos + '" rows="8" cols="80"></textarea></div>\
             </div>');
             });
         });
@@ -460,18 +452,18 @@ $f = htmlentities($row['user_id']);
                 <div class="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="./index.php">Startseite</a></li>
-                        <li><a href="./add.php">Lebenslauf hinzufügen</a></li>
-                        <li><a href="./list.php">Lebenslauf Datenbank</a></li>
-                        <li><a href="./contactus.php">Kontaktieren Sie uns</a></li>
+                        <li><a href="./index2.php">Home</a></li>
+                        <li><a href="./add2.php">Add Resume</a></li>
+                        <li><a href="./list2.php">Resume Database</a></li>
+                        <li><a href="./contactus2.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-7 col-sm-5">
-                    <h5>Unsere Adresse</h5>
+                    <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
-		              Deutschland<br>
+		              Germany<br>
                       <i class="fa fa-phone fa-lg"></i>: +4917676497855<br>
                       <i class="fa fa-fax fa-lg"></i>: +492 8765 4321<br>
                       <i class="fa fa-envelope fa-lg"></i>: 
@@ -491,7 +483,7 @@ $f = htmlentities($row['user_id']);
            </div>
            <div class="row justify-content-center">             
                 <div class="col-auto">
-                    <p>© Urheberrecht 2021 Md Shohanoor Rahman</p>
+                    <p>© Copyright 2021 Md Shohanoor Rahman</p>
                 </div>
            </div>
         </div>

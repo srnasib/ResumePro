@@ -3,7 +3,7 @@ session_start();
 require_once "pdo.php";
 if ( isset($_POST['cancel'] ) ) {
   // Redirect the browser to game.php
-  header("Location: index.php");
+  header("Location: index2.php");
   return;
 }
 
@@ -17,14 +17,14 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['email']) && isset($_POST['pass']) ) {
   if ( strlen($_POST['email']) < 1 || strlen($_POST['pass']) < 1 ) {
-      $_SESSION['error'] = "E-Mail und Passwort sind erforderlich";
-      header("Location: index.php");
+      $_SESSION['error'] = "Email and password are required";
+      header("Location: index2.php");
       return;
       
   } 
   else if ( strpos(($_POST['email']),'@' ) === false ) {
-      $_SESSION['error'] = "E-Mail muss ein at-Zeichen (@) enthalten";
-      header("Location: index.php");
+      $_SESSION['error'] = "Email must have an at-sign (@)";
+      header("Location: index2.php");
       return;
   }    
   
@@ -42,15 +42,15 @@ if ( isset($_POST['email']) && isset($_POST['pass']) ) {
           $_SESSION['user_id'] = $row['user_id'];  
           // Redirect the browser to index.php 
           
-          header("Location: index.php");  
-          $_SESSION['success'] = "Anmeldung erfolgreich";
+          header("Location: index2.php");  
+          $_SESSION['success'] = "Login Successful";
           return;
           error_log("Login success ".$_row['user_id']);
           return; }
 
       else {
-              $_SESSION['error'] = "Falsches Passwort";
-              header("Location: index.php");
+              $_SESSION['error'] = "Incorrect password";
+              header("Location: index2.php");
               return;
            error_log("Login fail ".$_row['user_id']." $check");
       }
@@ -72,28 +72,28 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['regname']) && isset($_POST['regmail']) && isset($_POST['regpass']) && isset($_POST['regpass2']) ) {
   if ( strlen($_POST['regname']) < 1 || strlen($_POST['regmail']) < 1 || strlen($_POST['regpass']) < 1 || strlen($_POST['regpass2']) < 1) {
-      $_SESSION['error'] = "Alle Felder sind erforderlich";
-      header("Location: index.php");
+      $_SESSION['error'] = "All fields are required";
+      header("Location: index2.php");
       return;
       
   } 
   if (  strlen($_POST['regpass']) < 6 || strlen($_POST['regpass2']) < 6) {
-    $_SESSION['error'] = "Das Passwort muss mehr als 6 Zeichen enthalten";
-    header("Location: index.php");
+    $_SESSION['error'] = "Password must be more than 6 characters";
+    header("Location: index2.php");
     return;
     
 } 
 
 if (  ($_POST['regpass'])  != ($_POST['regpass2'])  ) {
-    $_SESSION['error'] = "Passwörter stimmen nicht überein";
-    header("Location: index.php");
+    $_SESSION['error'] = "Passwords do not match";
+    header("Location: index2.php");
     return;
     
 } 
 
 if (  ($_POST['regpass'])  != ($_POST['regpass2'])  ) {
-    $_SESSION['error'] = "Passwörter stimmen nicht überein";
-    header("Location: index.php");
+    $_SESSION['error'] = "Passwords do not match";
+    header("Location: index2.php");
     return;
     
 } 
@@ -103,8 +103,8 @@ $stmt->execute(array( ':emle' => $_POST['regmail']));
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
   if ( ($_POST['regmail']) == $row['email'] ) {
-      $_SESSION['error'] = "E-Mail existiert bereits in der Datenbank, bitte melden Sie sich an";
-      header("Location: index.php");
+      $_SESSION['error'] = "Email already exists in database, please log in";
+      header("Location: index2.php");
       return;
   }    
   
@@ -122,8 +122,8 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
         )
       );
      
-          header("Location: index.php");  
-          $_SESSION['success'] = "Registrierung erfolgreich";
+          header("Location: index2.php");  
+          $_SESSION['success'] = "Registration Successful";
           return;
           
 
@@ -147,15 +147,15 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['name1']) && isset($_POST['email1']) && isset($_POST['cell1']) && isset($_POST['feedback']) && isset($_POST['permission1'])) {
   if ( strlen($_POST['name1']) < 1 || strlen($_POST['email1']) < 1 || strlen($_POST['cell1']) < 1 || strlen($_POST['feedback']) < 1 || strlen($_POST['permission1']) < 1) {
-      header("Location: index.php");
-      $_SESSION['error'] = "Alle Felder sind erforderlich";
+      header("Location: index2.php");
+      $_SESSION['error'] = "All fields are required";
       return;
       
   } 
 
   if ( strpos(($_POST['email1']),'@' ) === false ) {
-    header("Location: index.php");
-     $_SESSION['error'] = "E-Mail muss ein at-Zeichen (@) enthalten";
+    header("Location: index2.php");
+     $_SESSION['error'] = "Email must have an at-sign (@)";
     return;
 }   
 
@@ -178,8 +178,8 @@ if ( isset($_POST['name1']) && isset($_POST['email1']) && isset($_POST['cell1'])
         )
       );
      
-          header("Location: index.php");  
-          $_SESSION['success'] = "Vielen Dank, dass Sie mit mir Kontakt aufgenommen haben!";
+          header("Location: index2.php");  
+          $_SESSION['success'] = "Thank you for contacting me!";
           return;
           
 
@@ -205,15 +205,15 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['name2']) && isset($_POST['email2']) && isset($_POST['cell2']) && isset($_POST['feedback1']) && isset($_POST['permission2'])) {
   if ( strlen($_POST['name2']) < 1 || strlen($_POST['email2']) < 1 || strlen($_POST['cell2']) < 1 || strlen($_POST['feedback1']) < 1 || strlen($_POST['permission2']) < 1) {
-      header("Location: index.php");
-      $_SESSION['error'] = "Alle Felder sind erforderlich";
+      header("Location: index2.php");
+      $_SESSION['error'] = "All fields are required";
       return;
       
   } 
 
   if ( strpos(($_POST['email2']),'@' ) === false ) {
-    header("Location: index.php");
-    $_SESSION['error'] = "E-Mail muss ein at-Zeichen (@) enthalten";
+    header("Location: index2.php");
+    $_SESSION['error'] = "Email must have an at-sign (@)";
     
     return;
 }   
@@ -237,8 +237,8 @@ if ( isset($_POST['name2']) && isset($_POST['email2']) && isset($_POST['cell2'])
         )
       );
            
-          header("Location: index.php");  
-          $_SESSION['success'] = "Vielen Dank für Ihre Kontaktaufnahme!";
+          header("Location: index2.php");  
+          $_SESSION['success'] = "Thank you for contacting!";
           return;
           
 
@@ -256,9 +256,9 @@ if ( $failure !== false ) {
 
 
     <!DOCTYPE html>
-    <html lang="de">
+    <html lang="en">
     <head>
-    <title>Willkommen bei ResumePro</title>
+    <title>Welcome to ResumePro</title>
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -284,10 +284,10 @@ if ( $failure !== false ) {
           <div class="collapse navbar-collapse" id="Navbar" >
         
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link active" href="#"><span class="fa fa-home fa-lg"></span > Startseite</a></li>
-            <li class="nav-item"><a class="nav-link" href="./add.php"><span class="fa fa-plus fa-lg"></span> Lebenslauf hinzufügen</a></li>
-            <li class="nav-item"><a class="nav-link" href="./list.php" ><span class="fa fa-list fa-lg"></span>Lebenslauf Datenbank</a></li>
-            <li class="nav-item"><a class="nav-link" href="./contactus.php"><span class="fa fa-address-card fa-lg"></span >Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#"><span class="fa fa-home fa-lg"></span > Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="./add2.php"><span class="fa fa-plus fa-lg"></span> Add Resume</a></li>
+            <li class="nav-item"><a class="nav-link" href="./list2.php" ><span class="fa fa-list fa-lg"></span>Resume Database</a></li>
+            <li class="nav-item"><a class="nav-link" href="./contactus2.php"><span class="fa fa-address-card fa-lg"></span >Contact</a></li>
         
         </ul>
         <?php
@@ -296,7 +296,7 @@ if ( $failure !== false ) {
 
                 echo '<span class="navbar-text" id="loginButton">
                 <a>
-                <span class="fa fa-sign-in"></span> Anmeldung</a>
+                <span class="fa fa-sign-in"></span> Login</a>
             </span>
             <span class="navbar-text mleft" id="registerButton">
             &nbsp;<a>
@@ -304,9 +304,8 @@ if ( $failure !== false ) {
             </span>
             <span class="navbar-text mleft" id="languageButton">
             &nbsp;<a>
-                <span class="fa fa-language "></span> Sprache</a>
-            </span>
-            ';
+                <span class="fa fa-language "></span> Language</a>
+            </span>';
             
                 
             
@@ -315,16 +314,13 @@ if ( $failure !== false ) {
                 
 
                       echo '<span class="ml-10 navbar-text" >
-                      <a href="logout.php">
-                      <span class="fa fa-sign-out"></span> Abmeldung</a>
+                      <a href="logout2.php">
+                      <span class="fa fa-sign-out"></span> Logout</a>
                   </span>
                   <span class="navbar-text mleft" id="languageButton">
             &nbsp;<a>
-                <span class="fa fa-language "></span> Sprache</a>
-            </span>
-                  
-                  
-                  ';
+                <span class="fa fa-language "></span> Language</a>
+            </span>';
                       
                   
                           }
@@ -350,10 +346,10 @@ try {
     console.log("Validating pw="+pw);
 
     if (pw == null || pw == ""|| eml==null || eml=="" ) {
-        alert("Beide Felder müssen ausgefüllt werden");
+        alert("Both fields must be filled out");
         return false; }
      if  (eml.indexOf('@') == -1)
-  { alert("Ungültige E-Mail Adresse");
+  { alert("invalid email address");
   return false; } 
 else
    {return true; }
@@ -379,13 +375,13 @@ try {
    
 
     if (pwreg == null || pwreg == ""|| emlreg==null || emlreg==""||namereg == null || namereg == ""|| pw2reg==null || pw2reg=="" ) {
-        alert("Alle Felder müssen ausgefüllt werden");
+        alert("All fields must be filled out");
         return false; }
      if  ((emlreg.indexOf('@') == -1)||(emlreg.indexOf('@') == -1))
-  { alert("Ungültige E-Mail Adresse");
+  { alert("invalid email address");
   return false; } 
   if  (pwreg != pw2reg)
-  { alert("Passwörter stimmen nicht überein");
+  { alert("Passwords do not match");
   return false; } 
 else
    {return true; }
@@ -414,7 +410,7 @@ try {
     
 
     if (cs1 == null || cs1 == ""|| cs2==null || cs2=="" || cs3==null || cs3=="" || cs4==null || cs4=="" ) {
-        alert("Alle Felder müssen ausgefüllt werden");
+        alert("All fields must be filled out");
         return false; }
    
 else
@@ -445,7 +441,7 @@ try {
     
 
     if (cs1 == null || cs1 == ""|| cs2==null || cs2=="" || cs3==null || cs3=="" || cs4==null || cs4=="" ) {
-        alert("Alle Felder müssen ausgefüllt werden");
+        alert("All fields must be filled out");
         return false; }
    
 else
@@ -467,7 +463,7 @@ return false;
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Anmeldung </h4>
+                    <h4 class="modal-title">Login </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -475,25 +471,25 @@ return false;
                     <form method="POST">
                         <div class="form-row">
                             <div class="form-group col-sm-4">
-                                    <label class="sr-only" for="nam">E-Mail Adresse</label>
-                                    <input type="text"  name="email"  class="form-control form-control-sm mr-1" id="nam" placeholder="E-Mail eingeben">
+                                    <label class="sr-only" for="nam">Email address</label>
+                                    <input type="text"  name="email"  class="form-control form-control-sm mr-1" id="nam" placeholder="Enter email">
                             </div>
                             <div class="form-group col-sm-4">
-                                <label class="sr-only" for="id_1723">Passwort</label>
-                                <input type="password" name="pass" class="form-control form-control-sm mr-1" id="id_1723" placeholder="Passwort">
+                                <label class="sr-only" for="id_1723">Password</label>
+                                <input type="password" name="pass" class="form-control form-control-sm mr-1" id="id_1723" placeholder="Password">
                             </div>
                             <div class="col-sm-auto">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label"> Erinnere mich
+                                    <label class="form-check-label"> Remember me
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             
-                            <input type="submit" name="login"    class="btn btn-primary btn-sm ml-1" value="Einloggen">
-                            <input type="submit" class="btn btn-secondary btn-sm ml-auto" name="cancel" value="Abbrechen" data-dismiss="modal">    
+                            <input type="submit" name="login"    class="btn btn-primary btn-sm ml-1" value="Log In">
+                            <input type="submit" class="btn btn-secondary btn-sm ml-auto" name="cancel" value="Cancel" data-dismiss="modal">    
                         </div>
                     </form>
                 </div>
@@ -516,19 +512,19 @@ return false;
                         <div class="form-row">
                             <div class="form-group col-sm-12">
                                     <label class="sr-only" for="regname">Name</label>
-                                    <input type="text"  name="regname"  class="form-control form-control-sm mr-1" id="regname" placeholder="Name eingeben">
+                                    <input type="text"  name="regname"  class="form-control form-control-sm mr-1" id="regname" placeholder="Enter name">
                             </div>
                             <div class="form-group col-sm-12">
                                 <label class="sr-only" for="regmail">E-Mail</label>
-                                <input type="email" name="regmail" class="form-control form-control-sm mr-1" id="regmail" placeholder="E-Mail eingeben ">
+                                <input type="email" name="regmail" class="form-control form-control-sm mr-1" id="regmail" placeholder="Enter E-Mail">
                             </div>
                             <div class="form-group col-sm-12">
-                                <label class="sr-only" for="regpass">Passwort</label>
-                                <input type="password" name="regpass" class="form-control form-control-sm mr-1" id="regpass" placeholder="Passwort eingeben">
+                                <label class="sr-only" for="regpass">Password</label>
+                                <input type="password" name="regpass" class="form-control form-control-sm mr-1" id="regpass" placeholder="Enter Password">
                             </div>
                             <div class="form-group col-sm-12">
-                                <label class="sr-only" for="regpass2">Passwort wiederholen</label>
-                                <input type="password" name="regpass2" class="form-control form-control-sm mr-1" id="regpass2" placeholder=" Passwort wiederholen">
+                                <label class="sr-only" for="regpass2">Repeat Password</label>
+                                <input type="password" name="regpass2" class="form-control form-control-sm mr-1" id="regpass2" placeholder=" Repeat Password">
                             </div>
                             
                           
@@ -536,7 +532,7 @@ return false;
                         <div class="form-row">
                             
                             <input type="submit" name="register" onclick="doRegValidate();"  class="btn btn-primary btn-sm ml-1" value="Register">
-                            <input type="submit" class="btn btn-secondary btn-sm ml-auto"  name="cancel" value="Abbrechen" data-dismiss="modal">    
+                            <input type="submit" class="btn btn-secondary btn-sm ml-auto"  name="cancel" value="Cancel" data-dismiss="modal">    
                         </div>
                     </form>
                 </div>
@@ -550,7 +546,7 @@ return false;
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Kontaktieren Sie mich </h4>
+                    <h4 class="modal-title">Contact me </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body align-items-center">
@@ -560,7 +556,7 @@ return false;
                         <div class="form-group row mt-3 align-items-center">
                             <label for="name1" class="col-12 col-md-5 col-form-label">Name</label>
                             <div class="col-12 col-md-7">
-                                <input type="text"  class="form-control" id="name1" name="name1" placeholder="Ihren Namen eingeben">
+                                <input type="text"  class="form-control" id="name1" name="name1" placeholder="Name">
                             </div>
                        
                             
@@ -570,23 +566,23 @@ return false;
                       
                             <label for="email1" class="col-12 col-md-5 col-form-label">E-Mail</label>
                             <div class="col-12 col-md-7">
-                                <input type="email" class="form-control" id="email1" name="email1" placeholder="E-Mail eingeben">
+                                <input type="email" class="form-control" id="email1" name="email1" placeholder="e-mail">
                             </div>
                         
                         </div>
                         <div class="form-group row mt-3 align-items-center">
-                            <label for="cell1" class="col-12 col-md-5 col-form-label">Rufnummer</label>
+                            <label for="cell1" class="col-12 col-md-5 col-form-label">Phone</label>
                             <div class="col-12 col-md-7">
-                                <input type="tel" class="form-control" id="cell1" name="cell1" placeholder="Rufnummer eigeben ">
+                                <input type="tel" class="form-control" id="cell1" name="cell1" placeholder="Phone No.">
                             </div>
                        
                         </div>
 
 
                         <div class="form-group row">
-                                 <label for="feedback" class="col-md-5 col-form-label">Nachricht</label>
+                                 <label for="feedback" class="col-md-5 col-form-label">Message</label>
                                  <div class="col-md-7">
-                                 <textarea class="form-control" id="feedback" name="feedback" rows="3" placeholder="Schreiben Sie Ihre Nachricht"></textarea>
+                                 <textarea class="form-control" id="feedback" name="feedback" rows="3" placeholder="Type your message"></textarea>
                                  </div>
                                  </div>
 
@@ -594,25 +590,25 @@ return false;
 
                         <div class="form-row align-items-center">
                             <div class="col-12 col-sm-2  "> 
-                                 <p> Kann ich Sie kontaktieren??</p>
+                                 <p> Can I contact?</p>
                             </div> 
 
                             <div class="form-group col-12 col-sm "> 
                              
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-success active">
-                                                <input type="radio" name="permission1" value="yes" id="perm1" autocomplete="off" checked  > Ja
+                                                <input type="radio" name="permission1" value="yes" id="perm1" autocomplete="off" checked  > Yes
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="permission1" value="no" id="perm2" autocomplete="off"> Nein
+                                                <input type="radio" name="permission1" value="no" id="perm2" autocomplete="off"> No
                                             </label>
                                   </div>
                                 </div>                  
                         </div>
                         <div class="row offset-2 ">
                              
-                            <input type="submit" class="btn btn-secondary btn-md ml-auto"  name="cancel" value="Abbrechen" data-dismiss="modal">  
-                            <input type="submit" name="s1"  onclick="doSendValidate1();"  class="btn btn-primary btn-md ml-4 mr-3" value="Senden">
+                            <input type="submit" class="btn btn-secondary btn-md ml-auto"  name="cancel" value="Cancel" data-dismiss="modal">  
+                            <input type="submit" name="s1"  onclick="doSendValidate1();"  class="btn btn-primary btn-md ml-4 mr-3" value="Send">
                              
                         </div>
                     </form>
@@ -622,16 +618,17 @@ return false;
     </div>
 
 
+
     <div id="languageModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" role="content">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Change language </h4>
+                    <h4 class="modal-title">Sprache ändern </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
                         <div class="form-row"> 
-                        <a href="./index2.php" class="btn btn-primary btn-lg " role="button" aria-disabled="true">Click here to go to English Site</a>
+                        <a href="./index.php" class="btn btn-primary btn-lg " role="button" aria-disabled="true">Zur deutschen Website</a>
                         </div>
                 </div>
             </div>
@@ -645,20 +642,20 @@ return false;
     <header class="jumbotron">
         <div class=container>
             <div class="row row-header">
-                <div class="col-12 col-sm-7">
-                    <h1>ResumePro : Ihre Lösung zur Verwaltung von Lebensläufen!</h1>
-                    <p>ResumePro ist eine Webanwendung für die Verwaltung von Lebensläufen. Sie können jetzt eine unbegrenzte Anzahl von Lebensläufen in dieser App speichern, bearbeiten und aktualisieren!
-                    Gäste können ohne Registrierung testen. <strong>Gast-E-Mail : guest@test.com , Gast-Passwort : php123  </strong>
+                <div class="col-12 col-sm-6">
+                    <h1>ResumePro : Your solution to manage resumes!</h1>
+                    <p>ResumePro is a web application for resume management. You can now now store, edit, update unlimited number of resumes in this app!
+                    Guests can test without registering.<strong> Guest E-Mail : guest@test.com , Guest Password : php123</strong>
                     </p>
                 </div>
                 <div class="col-12 col-sm-3 align-self-center">
                     <img src="img/logo.png" class="img-fluid">  
                 </div>
-                <div class="col-12 col-sm-2 align-self-center" id="reserveButton">
+                <div class="col-12 col-sm-3 align-self-center" id="reserveButton">
                     
                     <a class="btn btn-warning btn-md btn-block"
                     
-                     role="button">Kontakt</a>
+                     role="button">Contact me</a>
                 </div>
             </div>
         </div>
@@ -692,8 +689,8 @@ if ( isset($_SESSION['success']) ) {
                             <img class="d-block img-fluid"
                                 src="img/add2.png" alt="Uthappizza">
                             <div class="carousel-caption d-none d-md-block">
-                                <h2>Jetzt anfangen! <span class="badge badge-danger">LEBENSLAUF HINZUFÜGEN KLICKEN</span> </h2>
-                                <p class="d-none d-sm-block">Jetzt können Sie so viele Lebensläufe in dieser Anwendung speichern. Speichern und verwenden Sie sie nach Bedarf. Worauf warten Sie also noch? Starten Sie jetzt!</p>
+                                <h2>Start Now! <span class="badge badge-danger">CLICK ADD  RESUME</span> </h2>
+                                <p class="d-none d-sm-block">Now you can store as much Resume in this application. Store and use them as required. So what are you waiting for? Start now!</p>
                             </div>
                         </div>
 
@@ -702,8 +699,8 @@ if ( isset($_SESSION['success']) ) {
                             <img class="d-block img-fluid"
                             src="img/list1.jpg" alt="Weekend_Grand_Buffet">
                         <div class="carousel-caption d-none d-md-block">
-                            <h2>Verwalten Sie jetzt Ihre Lebensläufe! <span class="badge badge-secondary">ANSEHEN, AKTUALISIEREN UND LÖSCHEN!</span> </span></h2>
-                          <p class="d-none d-sm-block mr-3">Wir unterstützen das Einsehen, Bearbeiten und Löschen von Lebensläufen zu jeder Zeit. Sie müssen sich also keine Sorgen um den Datenschutz machen. Unsere dynamisch gesicherte Webanwendung speichert die Daten sicher in der Datenbank.</p>
+                            <h2>Manage your Resumes instantly! <span class="badge badge-secondary">VIEW, UPDATE & DELETE!</span> </span></h2>
+                          <p class="d-none d-sm-block mr-3">We support viewing, editing and deleting the Resumes any time. So nothing to be worried about data privacy. Our dynamic secured web application stores data safely into the database.</p>
                           </div>
                         </div>
 
@@ -713,8 +710,9 @@ if ( isset($_SESSION['success']) ) {
                             src="img/alberto.png" alt="alberto">
                         <div class="carousel-caption d-none d-md-block">
                             <h2 class="mt-0">Md Shohanoor Rahman </span></h2>
-                            <span class="badge badge-warning"><h4>Full Stack Entwickler</h4></span>
-                            <p class="d-none d-sm-block">Hallo zusammen! Ich bin der Designer dieser Webanwendung : ResumePro, wo man Lebensläufe speichern, bearbeiten, aktualisieren und löschen kann. Diese Webanwendung kann Ihnen helfen Sie Lebensläufe zu verwalten. Ich freue mich darauf, meine Fähigkeiten zu präsentieren. Ich danke Ihnen!
+                            <span class="badge badge-warning"><h4>Full Stack Developer</h4></span>
+                            <p class="d-none d-sm-block">Hello there! I am the designer of this web application : ResumePro, where you can store, edit, update and delete resumes. This web app can help 
+                            you to manage resumes. Looking forward to showcase my skills. Thank You!
                                 </p>
                           </div>
                         </div>
@@ -751,16 +749,16 @@ if ( isset($_SESSION['success']) ) {
 
         <div class="row row-content align-items-center">
             <div class="col-12 col-sm-4 order-sm-last col-md-3">
-                <h3>Fangen Sie jetzt an!</h3>
+                <h3>Start adding now!</h3>
             </div>
             <div class="col col-sm order-sm-first col-md">
 
                 <div class="media">
                     <img class="d-flex mr-3 img-thumbnail align-self-center"
-                            src="img/add.png" alt="ADD">
+                            src="img/add.png" alt="Uthappizza">
                     <div class="media-body">
-                        <h2 class="mt-0">Jetzt einen Lebenslauf hinzufügen!<span class="badge badge-danger ml-2">SPEICHERN</span><span class="badge badge-pill badge-secondary ml-2">JETZT!</span></h2>
-                        <p class="d-none d-sm-block">Sie können mit dem Speichern von Lebensläufen beginnen, solange Sie eingeloggt sind. Diese Web-App unterstützt eine unbegrenzte Anzahl von Lebensläufen. Unsere Datenbanken sind gesichert und sicher für die Speicherung von Daten.</p>
+                        <h2 class="mt-0">Add a resume now!<span class="badge badge-danger ml-2">STORE</span><span class="badge badge-pill badge-secondary ml-2">NOW!</span></h2>
+                        <p class="d-none d-sm-block">You can start storing Resumes as long as you are logged in. Unlimited number of resume storing is supported by this web app. Our databases are secured and safe for storing data.</p>
                     </div>
                 </div>
                 
@@ -774,14 +772,14 @@ if ( isset($_SESSION['success']) ) {
 
         <div class="row row-content align-items-center">
             <div class="col-12 col-sm-4  col-md-3">
-                <h3>Mit Unterstützung von Bearbeiten & Löschen</h3>
+                <h3>With Support of Modify & Delete</h3>
             </div>
             <div class="col col-sm  col-md">
 
                 <div class="media">
                     <div class="media-body">
-                        <h2 class="mt-0">Lebensläufe jetzt aktualisieren, bearbeiten und löschen!<span class="badge badge-danger ml-2">NEU</span></h2>
-                        <p class="d-none d-sm-block mr-3">Sie können jederzeit auf Ihre gespeicherten Lebensläufe zugreifen. Auch die Löschung Ihrer Daten und die Aktualisierung von Lebensläufen ist 24x7 möglich. Ihre Datensicherheit ist unser höchstes Anliegen. </p>
+                        <h2 class="mt-0">Update, edit & delete resumes now!<span class="badge badge-danger ml-2">NEW</span></h2>
+                        <p class="d-none d-sm-block mr-3">You can access your stored resumes anytime. Also removal of your data and updating resumes is available 24x7. Your privacy is our utmost conern. </p>
                     </div>
                     <img class="d-flex mr-3 img-thumbnail align-self-center"
                             src="img/list2.jpg" alt="Uthappizza">
@@ -794,7 +792,7 @@ if ( isset($_SESSION['success']) ) {
 
         <div class="row row-content align-items-center">
             <div class="col-12 col-sm-4 order-sm-last col-md-3">
-                <h3>Treffen Sie den Entwickler</h3>
+                <h3>Meet the developer</h3>
             </div>
             <div class="col col-sm order-sm-first col-md">
                 <div class="media">
@@ -802,8 +800,9 @@ if ( isset($_SESSION['success']) ) {
                             src="img/nasib.png" alt="Alberto Somayya">
                     <div class="media-body">
                         <h2 class="mt-0">Md Shohanoor Rahman</h2>
-                        <h4>Web Entwickler</h4>
-                        <p class="d-none d-sm-block">Hallo zusammen! Ich bin der Designer dieser Webanwendung : ResumePro, wo man Lebensläufe speichern, bearbeiten, aktualisieren und löschen kann. Diese Webanwendung kann Ihnen helfen Sie Lebensläufe zu verwalten. Ich freue mich darauf, meine Fähigkeiten zu präsentieren. Ich danke Ihnen!
+                        <h4>Web Developer</h4>
+                        <p class="d-none d-sm-block">Hello there! I am the designer of this web application : ResumePro, where you can store, edit, update and delete resumes. This web app can help 
+                            you to manage resumes. Looking forward to showcase my skills. Thank You!
                             </p>
                     </div>
                 </div>
@@ -816,7 +815,7 @@ if ( isset($_SESSION['success']) ) {
         <div class="row row-content align-items-center" id="reserve" >
             <div class="col-12 col-sm-12 ">
                 <div class="card">
-                    <h3 class="card-header bg-yellow text-white">Jetzt kontaktieren</h3>
+                    <h3 class="card-header bg-yellow text-white">Contact Now</h3>
                     <div class="card-body modal-body">
                             <form method="POST">
                                 
@@ -824,7 +823,7 @@ if ( isset($_SESSION['success']) ) {
                                 <div class="form-group row  align-items-center">
                                     <label for="name2" class="col-12 col-md-4 col-form-label">Name</label>
                                     <div class="col-12 col-md-8">
-                                        <input type="text" class="form-control"  id="name2" name="name2" placeholder="Ihren Namen eingeben">
+                                        <input type="text" class="form-control"  id="name2" name="name2" placeholder="Name">
                                     </div>
                                 
                                     
@@ -834,14 +833,14 @@ if ( isset($_SESSION['success']) ) {
                                 
                                     <label for="email2" class="col-12 col-md-4 col-form-label">E-Mail</label>
                                     <div class="col-12 col-md-8">
-                                        <input type="email" class="form-control" id="email2" name="email2" placeholder="E-Mail eingeben ">
+                                        <input type="email" class="form-control" id="email2" name="email2" placeholder="e-mail">
                                     </div>
                                 
                                 </div>
                                 <div class="form-group row  align-items-center">
                                     <label for="cell2" class="col-12 col-md-4 col-form-label">Phone</label>
                                     <div class="col-12 col-md-8">
-                                        <input type="phone" class="form-control" id="cell2" name="cell2" placeholder="Rufnummer eingeben ">
+                                        <input type="phone" class="form-control" id="cell2" name="cell2" placeholder="Phone No.">
                                     </div>
                                 
                                     
@@ -849,9 +848,9 @@ if ( isset($_SESSION['success']) ) {
                                 </div>
 
                                 <div class="form-group row">
-                                 <label for="feedback1" class="col-md-4 col-form-label">Nachricht</label>
+                                 <label for="feedback1" class="col-md-4 col-form-label">Message</label>
                                  <div class="col-md-8">
-                                 <textarea class="form-control" id="feedback1"  name="feedback1" rows="3" placeholder="Schreiben Sie Ihre Nachricht"></textarea>
+                                 <textarea class="form-control" id="feedback1"  name="feedback1" rows="3" placeholder="Type your message"></textarea>
                                  </div>
                                  </div>
 
@@ -859,15 +858,15 @@ if ( isset($_SESSION['success']) ) {
                                 <div class="form-group row align-items-center">
                                     
                         
-                                    <label for="can" class="col-12 col-md-4 col-form-label">Kann ich Sie kontaktieren?</label>
+                                    <label for="can" class="col-12 col-md-4 col-form-label">Can I contact?</label>
                                     <div class="form-group col-12 col-sm-8 " id="can" > 
                                         
                                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                             <label class="btn btn-success active">
-                                                <input type="radio" name="permission2" value="yes" id="perm3" autocomplete="off" checked  > Ja
+                                                <input type="radio" name="permission2" value="yes" id="perm3" autocomplete="off" checked  > Yes
                                             </label>
                                             <label class="btn btn-danger">
-                                                <input type="radio" name="permission2" value="no" id="perm4" autocomplete="off"> Nein
+                                                <input type="radio" name="permission2" value="no" id="perm4" autocomplete="off"> No
                                             </label>
                                             
                                         </div>  
@@ -875,8 +874,8 @@ if ( isset($_SESSION['success']) ) {
                                 
                                 <div class="row offset-1 mt-3 ">
                                      
-                                <input type="submit" class="btn btn-secondary btn-md ml-auto "  name="cancel" value="Abbrechen" data-dismiss="modal">  
-                            <input type="submit" name="s2" onclick="doSendValidate2();"    class="btn btn-primary btn-md ml-4 mr-3" value="Senden">
+                                <input type="submit" class="btn btn-secondary btn-md ml-auto "  name="cancel" value="Cancel" data-dismiss="modal">  
+                            <input type="submit" name="s2" onclick="doSendValidate2();"    class="btn btn-primary btn-md ml-4 mr-3" value="Send">
                              
                                 </div>
                             
@@ -911,18 +910,18 @@ if ( isset($_SESSION['success']) ) {
                 <div class="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="./index.php">Startseite</a></li>
-                        <li><a href="./add.php">Lebenslauf hinzufügen</a></li>
-                        <li><a href="./list.php">Lebenslauf Datenbank</a></li>
-                        <li><a href="./contactus.php">Kontaktieren Sie uns</a></li>
+                        <li><a href="./index2.php">Home</a></li>
+                        <li><a href="./add2.php">Add Resume</a></li>
+                        <li><a href="./list2.php">Resume Database</a></li>
+                        <li><a href="./contactus2.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-7 col-sm-5">
-                    <h5>Unsere Adresse</h5>
+                    <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
-		              Deutschland<br>
+		              Germany<br>
                       <i class="fa fa-phone fa-lg"></i>: +4917676497855<br>
                       <i class="fa fa-fax fa-lg"></i>: +492 8765 4321<br>
                       <i class="fa fa-envelope fa-lg"></i>: 
@@ -942,7 +941,7 @@ if ( isset($_SESSION['success']) ) {
            </div>
            <div class="row justify-content-center">             
                 <div class="col-auto">
-                    <p>© Urheberrecht 2021 Md Shohanoor Rahman</p>
+                    <p>© Copyright 2021 Md Shohanoor Rahman</p>
                 </div>
            </div>
         </div>

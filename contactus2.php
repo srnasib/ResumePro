@@ -3,7 +3,7 @@ session_start();
 require_once "pdo.php";
 if ( isset($_POST['cancel'] ) ) {
   // Redirect the browser to game.php
-  header("Location: index.php");
+  header("Location: index2.php");
   return;
 }
 
@@ -15,14 +15,14 @@ $failure = false;  // If we have no POST data
 // Check to see if we have some POST data, if we do process it
 if ( isset($_POST['email']) && isset($_POST['pass']) ) {
   if ( strlen($_POST['email']) < 1 || strlen($_POST['pass']) < 1 ) {
-      $_SESSION['error'] = "E-Mail und Passwort sind erforderlich";
-      header("Location: index.php");
+      $_SESSION['error'] = "Email and password are required";
+      header("Location: index2.php");
       return;
       
   } 
   else if ( strpos(($_POST['email']),'@' ) === false ) {
-      $_SESSION['error'] = "E-Mail muss ein at-Zeichen (@) enthalten";
-      header("Location: index.php");
+      $_SESSION['error'] = "Email must have an at-sign (@)";
+      header("Location: index2.php");
       return;
   }    
   
@@ -40,15 +40,15 @@ if ( isset($_POST['email']) && isset($_POST['pass']) ) {
           $_SESSION['user_id'] = $row['user_id'];  
           // Redirect the browser to index.php 
           
-          header("Location: contactus.php");  
-          $_SESSION['success'] = "Anmeldung erfolgreich";
+          header("Location: contactus2.php");  
+          $_SESSION['success'] = "Login Successful";
           return;
           error_log("Login success ".$_row['user_id']);
           return; }
 
       else {
-              $_SESSION['error'] = "Falsches Passwort";
-              header("Location: contactus.php");
+              $_SESSION['error'] = "Incorrect password";
+              header("Location: contactus2.php");
               return;
            error_log("Login fail ".$_row['user_id']." $check");
       }
@@ -86,10 +86,10 @@ try {
     console.log("Validating pw="+pw);
 
     if (pw == null || pw == ""|| eml==null || eml=="" ) {
-        alert("Beide Felder müssen ausgefüllt werden");
+        alert("Both fields must be filled out");
         return false; }
      if  (eml.indexOf('@') == -1)
-  { alert("Ungültige E-Mail Adresse");
+  { alert("invalid email address");
   return false; } 
 else
    {return true; }
@@ -102,9 +102,9 @@ return false;
 </script>
 
     <!DOCTYPE html>
-    <html lang="de">
+    <html lang="en">
     <head>
-    <title>Kontakt ResumePro Team</title>
+    <title>Contact ResumePro Team</title>
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -130,10 +130,10 @@ return false;
           <div class="collapse navbar-collapse" id="Navbar" >
         
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link" href="./index.php"><span class="fa fa-home fa-lg"></span > Startseite</a></li>
-            <li class="nav-item"><a class="nav-link" href="./add.php"><span class="fa fa-plus fa-lg"></span> Lebenslauf hinzufügen</a></li>
-            <li class="nav-item"><a class="nav-link" href="./list.php" ><span class="fa fa-list fa-lg"></span>Lebenslauf Datenbank</a></li>
-            <li class="nav-item"><a class="nav-link active" href="./contactus.php"><span class="fa fa-address-card fa-lg"></span >Kontakt</a></li>
+          <li class="nav-item"><a class="nav-link" href="./index2.php"><span class="fa fa-home fa-lg"></span > Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="./add2.php"><span class="fa fa-plus fa-lg"></span> Add Resume</a></li>
+            <li class="nav-item"><a class="nav-link  active" href="./list2.php" ><span class="fa fa-list fa-lg"></span>Resume Database</a></li>
+            <li class="nav-item"><a class="nav-link" href="./contactus2.php"><span class="fa fa-address-card fa-lg"></span >Contact</a></li>
         
         </ul>
         <?php
@@ -142,7 +142,7 @@ return false;
 
                 echo '<span class="navbar-text" id="loginButton">
                 <a>
-                <span class="fa fa-sign-in"></span> Anmeldung</a>
+                <span class="fa fa-sign-in"></span> Login</a>
             </span>';
                 
             
@@ -151,8 +151,8 @@ return false;
                 
 
                       echo '<span class="navbar-text" >
-                      <a href="logout.php">
-                      <span class="fa fa-sign-out"></span> Abmeldung</a>
+                      <a href="logout2.php">
+                      <span class="fa fa-sign-out"></span> Logout</a>
                   </span>';
                       
                   
@@ -179,10 +179,10 @@ try {
     console.log("Validating pw="+pw);
 
     if (pw == null || pw == ""|| eml==null || eml=="" ) {
-        alert("Beide Felder müssen ausgefüllt werden");
+        alert("Both fields must be filled out");
         return false; }
      if  (eml.indexOf('@') == -1)
-  { alert("Ungültige E-Mail Adresse");
+  { alert("invalid email address");
   return false; } 
 else
    {return true; }
@@ -195,12 +195,12 @@ return false;
 </script>
 
 
-<div id="loginModal" class="modal fade" role="dialog">
+     <div id="loginModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" role="content">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Anmeldung </h4>
+                    <h4 class="modal-title">Login </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -208,25 +208,25 @@ return false;
                     <form method="POST">
                         <div class="form-row">
                             <div class="form-group col-sm-4">
-                                    <label class="sr-only" for="nam">E-Mail Adresse</label>
-                                    <input type="text"  name="email"  class="form-control form-control-sm mr-1" id="nam" placeholder="E-Mail eingeben">
+                                    <label class="sr-only" for="nam">Email address</label>
+                                    <input type="text"  name="email"  class="form-control form-control-sm mr-1" id="nam" placeholder="Enter email">
                             </div>
                             <div class="form-group col-sm-4">
-                                <label class="sr-only" for="id_1723">Passwort</label>
-                                <input type="password" name="pass" class="form-control form-control-sm mr-1" id="id_1723" placeholder="Passwort">
+                                <label class="sr-only" for="id_1723">Password</label>
+                                <input type="password" name="pass" class="form-control form-control-sm mr-1" id="id_1723" placeholder="Password">
                             </div>
                             <div class="col-sm-auto">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox">
-                                    <label class="form-check-label"> Erinnere mich
+                                    <label class="form-check-label"> Remember me
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             
-                            <input type="submit" name="login"    class="btn btn-primary btn-sm ml-1" value="Einloggen">
-                            <input type="submit" class="btn btn-secondary btn-sm ml-auto" name="cancel" value="Abbrechen" data-dismiss="modal">    
+                            <input type="submit" onclick="return doValidate();"  class="btn btn-primary btn-sm ml-1" value="Log In">
+                            <input type="submit" class="btn btn-secondary btn-sm ml-auto" name="cancel" value="Cancel" data-dismiss="modal">    
                         </div>
                     </form>
                 </div>
@@ -237,10 +237,10 @@ return false;
     <header class="jumbotron">
         <div class=container>
             <div class="row row-header">
-                <div class="col-12 col-sm-7">
-                    <h1>ResumePro : Ihre Lösung zur Verwaltung von Lebensläufen!</h1>
-                    <p>ResumePro ist eine Webanwendung für die Verwaltung von Lebensläufen. Sie können jetzt eine unbegrenzte Anzahl von Lebensläufen in dieser App speichern, bearbeiten und aktualisieren!
-                    Gäste können ohne Registrierung testen. <strong>Gast-E-Mail : guest@test.com , Gast-Passwort : php123  </strong>
+                <div class="col-12 col-sm-6">
+                    <h1>ResumePro : Your solution to manage resumes!</h1>
+                    <p>ResumePro is a web application for resume management. You can now now store, edit, update unlimited number of resumes in this app!
+                    Guests can test without registering.<strong> Guest E-Mail : guest@test.com , Guest Password : php123</strong>
                     </p>
                 </div>
                 <div class="col-12 col-sm-3 align-self-center">
@@ -254,11 +254,11 @@ return false;
     <div class="container">
         <div class="row">
             <ol class="col-12 breadcrumb">
-                <li class="breadcrumb-item"><a href="./index.php">Startseite</a></li>
-                <li class="breadcrumb-item active">Kontakt</li>
+                <li class="breadcrumb-item"><a href="./index2.php">Home</a></li>
+                <li class="breadcrumb-item active">Contact Us</li>
             </ol>
             <div class="col-12">
-               <h3>Kontakt</h3>
+               <h3>Contact Us</h3>
                <hr>
             </div>
         </div>
@@ -281,10 +281,10 @@ if ( isset($_SESSION['success']) ) {
 
         <div class="row row-content">
            <div class="col-12">
-              <h3>Informationen zum Standort</h3>
+              <h3>Location Information</h3>
            </div>
             <div class="col-12 col-sm-4 offset-sm-1">
-                   <h5>Unsere Adresse</h5>
+                   <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
@@ -296,11 +296,11 @@ if ( isset($_SESSION['success']) ) {
 		           </address>
             </div>
             <div class="col-12 col-sm-6 offset-sm-1">
-                <h5>Karte unseres Standortes</h5>
+                <h5>Map of our Location</h5>
             </div>
             <div class="col-12 col-sm-11 offset-sm-1">
                 <div class="btn-group" role="group">
-                    <a role="button" class="btn btn-primary" href="tel:+4917676497855"><i class="fa fa-phone"></i> Aufruf</a>
+                    <a role="button" class="btn btn-primary" href="tel:+4917676497855"><i class="fa fa-phone"></i> Call</a>
                     <a role="button" class="btn btn-info"><i class="fa fa-skype"></i> Skype</a>
                     <a role="button" class="btn btn-success" href="mailto:srnasib@gmail.com"><i class="fa fa-envelope-o"></i> Email</a>
                 </div>
@@ -309,39 +309,39 @@ if ( isset($_SESSION['success']) ) {
 
         <div class="row row-content">
            <div class="col-12">
-              <h3>Senden Sie uns Ihr Feedback</h3>
+              <h3>Send us your Feedback</h3>
            </div>
             <div class="col-12 col-md-9">
             
                 <form>
                     <div class="form-group row">
-                        <label for="firstname" class="col-md-2 col-form-label">Vorname</label>
+                        <label for="firstname" class="col-md-2 col-form-label">First Name</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Vornamen eingeben">
+                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="lastname" class="col-md-2 col-form-label">Nachname</label>
+                        <label for="lastname" class="col-md-2 col-form-label">Last Name</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Nachname eingeben">
+                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
                         </div>
                     </div>
                    
 
                     <div class="form-group row">
-                        <label for="telnum" class="col-12 col-md-2 col-form-label">Kontakt Num.</label>
+                        <label for="telnum" class="col-12 col-md-2 col-form-label">Contact Tel.</label>
                         <div class="col-5 col-md-3">
-                            <input type="tel" class="form-control" id="areacode" name="areacode" placeholder="Vorwahl">
+                            <input type="tel" class="form-control" id="areacode" name="areacode" placeholder="Area code">
                         </div>
                         <div class="col-7 col-md-7">
-                            <input type="tel" class="form-control" id="telnum" name="telnum" placeholder="Rufnummer">
+                            <input type="tel" class="form-control" id="telnum" name="telnum" placeholder="Tel. number">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label for="emailid" class="col-md-2 col-form-label">Email</label>
                         <div class="col-md-10">
-                            <input type="email" class="form-control" id="emailid" name="emailid" placeholder="E-Mail eingeben">
+                            <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Email">
                         </div>
                     </div>
 
@@ -352,20 +352,20 @@ if ( isset($_SESSION['success']) ) {
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" name="approve" id="approve" value="">
                                 <label class="form-check-label" for="approve">
-                                    <strong>Dürfen wir Sie kontaktieren?</strong>
+                                    <strong>May we contact you?</strong>
                                 </label>
                             </div>
                         </div>
                         <div class="col-md-3 offset-md-1">
                             <select class="form-control">
-                                <option>Rufnummer.</option>
-                                <option>E-Mail</option>
+                                <option>Tel.</option>
+                                <option>Email</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="feedback" class="col-md-2 col-form-label">Ihr Feedback</label>
+                        <label for="feedback" class="col-md-2 col-form-label">Your Feedback</label>
                         <div class="col-md-10">
                             <textarea class="form-control" id="feedback" name="feedback" rows="12"></textarea>
                         </div>
@@ -374,7 +374,7 @@ if ( isset($_SESSION['success']) ) {
 
                     <div class="form-group row">
                         <div class="offset-md-2 col-md-10">
-                            <button type="submit" class="btn btn-primary">Feedback senden</button>
+                            <button type="submit" class="btn btn-primary">Send Feedback</button>
                         </div>
                     </div>
 
@@ -397,18 +397,18 @@ if ( isset($_SESSION['success']) ) {
                 <div class="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="./index.php">Startseite</a></li>
-                        <li><a href="./add.php">Lebenslauf hinzufügen</a></li>
-                        <li><a href="./list.php">Lebenslauf Datenbank</a></li>
-                        <li><a href="./contactus.php">Kontaktieren Sie uns</a></li>
+                        <li><a href="./index2.php">Home</a></li>
+                        <li><a href="./add2.php">Add Resume</a></li>
+                        <li><a href="./list2.php">Resume Database</a></li>
+                        <li><a href="./contactus2.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-7 col-sm-5">
-                    <h5>Unsere Adresse</h5>
+                    <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
-		              Deutschland<br>
+		              Germany<br>
                       <i class="fa fa-phone fa-lg"></i>: +4917676497855<br>
                       <i class="fa fa-fax fa-lg"></i>: +492 8765 4321<br>
                       <i class="fa fa-envelope fa-lg"></i>: 
@@ -428,7 +428,7 @@ if ( isset($_SESSION['success']) ) {
            </div>
            <div class="row justify-content-center">             
                 <div class="col-auto">
-                    <p>© Urheberrecht 2021 Md Shohanoor Rahman</p>
+                    <p>© Copyright 2021 Md Shohanoor Rahman</p>
                 </div>
            </div>
         </div>

@@ -3,15 +3,15 @@ session_start();
 require_once "pdo.php"; 
 
 if ( !isset($_SESSION['name']))
-{$_SESSION['success'] = "Bitte melden Sie sich an";
-header("Location:index.php");
+{$_SESSION['success'] = "Please log in";
+header("Location:index2.php");
 return; 
 }
 
 
 if ( isset($_POST['cancel'] ) ) {
     // Redirect the browser to login.php
-    header("Location: index.php");
+    header("Location: index2.php");
     return;
 }
 
@@ -21,29 +21,29 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
 
     if ( strlen($_POST['first_name']) <1  || strlen($_POST['last_name']) <1 || strlen($_POST['email']) <1  || strlen($_POST['headline'])<1 || strlen($_POST['summary']) <1 )
     {
-        $_SESSION['invalid'] = "Alle Felder sind erforderlich";
-        header("Location: add.php");
+        $_SESSION['invalid'] = "All fields are required";
+        header("Location: add2.php");
         return;
     
     }
 
      else if ( strpos(($_POST['email']),'@' ) === false )
      {
-        $_SESSION['invalid'] = "E-Mail Adresse muss @ enthalten";
-        header("Location: add.php");
+        $_SESSION['invalid'] = "Email address must contain @";
+        header("Location: add2.php");
         return;
      }
      else if ( (validatePos() ) !== true )
      {
         $_SESSION['invalid'] = validatePos();
-        header("Location: add.php");
+        header("Location: add2.php");
         return;
      }
 
      else if ( (validateEdu() ) !== true )
      {
         $_SESSION['invalid'] = validateEdu();
-        header("Location: add.php");
+        header("Location: add2.php");
         return;
      }
 
@@ -123,8 +123,8 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
       
       $rank++;
       }
-      header("Location: index.php");
-      $_SESSION['success'] = "Lebenslauf hinzugefügt";
+      header("Location: index2.php");
+      $_SESSION['success'] = "Record added";
       return;
       
 
@@ -146,11 +146,11 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
         $desc = $_POST['desc'.$i];
     
         if ( strlen($year) == 0 || strlen($desc) == 0 ) {
-          return "Alle Felder sind erforderlich";
+          return "All fields are required";
         }
     
         if ( ! is_numeric($year) ) {
-          return "Das Jahr der Benennung muss numerisch sein";
+          return "Position year must be numeric";
         }
       }
       return true;
@@ -168,11 +168,11 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
       $school = $_POST['school'.$i];
   
       if ( strlen($year1) == 0 || strlen($school) == 0 ) {
-        return "Alle Felder sind erforderlich";
+        return "All fields are required";
       }
   
       if ( ! is_numeric($year1) ) {
-        return "Bildungsjahr muss numerisch sein";
+        return "Education year must be numeric";
       }
     }
     return true;
@@ -187,7 +187,7 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Einen Lebenslauf hinzufügen</title>
+<title>Add a Resume to ResumePro</title>
 <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -211,10 +211,10 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
           <div class="collapse navbar-collapse" id="Navbar" >
         
           <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a class="nav-link " href="./index.php"><span class="fa fa-home fa-lg"></span > Startseite</a></li>
-            <li class="nav-item"><a class="nav-link active" href="./add.php"><span class="fa fa-plus fa-lg"></span> Lebenslauf hinzufügen</a></li>
-            <li class="nav-item"><a class="nav-link" href="./list.php" ><span class="fa fa-list fa-lg"></span>Lebenslauf Datenbank</a></li>
-            <li class="nav-item"><a class="nav-link" href="./contactus.php"><span class="fa fa-address-card fa-lg"></span >Kontakt</a></li>
+            <li class="nav-item"><a class="nav-link" href="./index2.php"><span class="fa fa-home fa-lg"></span > Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="./add2.php"><span class="fa fa-plus fa-lg"></span> Add Resume</a></li>
+            <li class="nav-item"><a class="nav-link" href="./list2.php" ><span class="fa fa-list fa-lg"></span>Resume Database</a></li>
+            <li class="nav-item"><a class="nav-link" href="./contactus2.php"><span class="fa fa-address-card fa-lg"></span >Contact Us</a></li>
         
         </ul>
         <?php
@@ -232,8 +232,8 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
                 
 
                       echo '<span class="navbar-text" >
-                      <a href="logout.php">
-                      <span class="fa fa-sign-out"></span> Abmeldung</a>
+                      <a href="logout2.php">
+                      <span class="fa fa-sign-out"></span> Logout</a>
                   </span>';
                       
                   
@@ -248,8 +248,8 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
      <div class=container>
     <div class="row">
         <ol class="col-12 breadcrumb">
-            <li class="breadcrumb-item"><a  href="./index.php" >Startseite</a></li>
-            <li class="breadcrumb-item active" >Lebenslauf hinzufügen</li>
+            <li class="breadcrumb-item"><a  href="./index.php" >Home</a></li>
+            <li class="breadcrumb-item active" >Add Resume</li>
         </ol>
     </div>
     <?php
@@ -264,14 +264,14 @@ if (  isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST[
   ?>
  
 <?php
-echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style="color: green;"><h4>Willkommen '.($_SESSION['name']).'</h4></div></div>');
+echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style="color: green;"><h4>Welcome '.($_SESSION['name']).'</h4></div></div>');
 ?>
 
 <div class="container">
 <div class="row row-content align-items-center" id="reserve" >
             <div class="col-12  offset-sm-1 col-sm-10">
                 <div class="card">
-                    <h3 class="card-header modal-header text-black">Lebenslauf hinzufügen</h3>
+                    <h3 class="card-header modal-header text-black">Add a Resume</h3>
                     <div class="card-body modal-body">
                         
                  
@@ -279,37 +279,37 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
 
 <input type="hidden" name="user_id" id="nam" size ="40" ><br/>
 <div class="form-group col-sm-4">
-<label for="fn"> <b>Vorname :</b>   </label>
+<label for="fn"> <b>First Name :</b>   </label>
 </div>
 <div class="form-group col-sm-6">
-<input type="text" name="first_name" id="fn" size ="40" class="form-control form-control-sm mr-1" placeholder="Vornamen eingeben"><br/>
+<input type="text" name="first_name" id="fn" size ="40" class="form-control form-control-sm mr-1" placeholder="Enter first name"><br/>
 </div>
 <div class="form-group col-sm-4">
-<label for="ln"><b>Nachname :</b>   </label>
+<label for="ln"><b>Last Name :</b>   </label>
 </div>
 <div class="form-group col-sm-6">
-<input type="text" name="last_name" id="ln" size ="40" class="form-control form-control-sm mr-1" placeholder="Nachname eingeben"><br/>
+<input type="text" name="last_name" id="ln" size ="40" class="form-control form-control-sm mr-1" placeholder="Enter last name"><br/>
 </div>
 <div class="form-group col-sm-4">
 <label for="em"><b>E-Mail :</b> :   </label>
 </div>
 <div class="form-group col-sm-6">
-<input type="text" name="email" id="em" size ="30" class="form-control form-control-sm mr-1" placeholder="E-Mail eingeben"><br/>
+<input type="text" name="email" id="em" size ="30" class="form-control form-control-sm mr-1" placeholder="Enter email"><br/>
 </div>
 <div class="form-group col-sm-4">
-<label for="hl"><b>Überschrift :</b>   </label>
+<label for="hl"><b>Headline :</b>   </label>
 </div>
 <div class="form-group col-sm-6">
-<input type="text" name="headline" id="hl" size ="45" class="form-control form-control-sm mr-1" placeholder="Eine Überschrift eingeben" ><br/>
+<input type="text" name="headline" id="hl" size ="45" class="form-control form-control-sm mr-1" placeholder="Enter headline" ><br/>
 </div>
 <div class="form-group col-sm-4">
-<p> <strong>  Zusammenfassung : </strong> </p>
+<p> <strong>  Summary : </strong> </p>
 </div>
 <div class="form-group col-sm-6">
 <textarea name="summary"  rows="10" cols="40" class="form-control form-control-sm mr-1" > </textarea> <br/>
 </div>
 <div class="form-group col-sm-4">
-<b>Bildung:</b>
+<b>Education:</b>
 </div>
 <div class="form-group col-sm-4">
 <input type="submit" id="addEdu" value="+" class="form-control form-control-sm mr-1"> 
@@ -317,7 +317,7 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
 <div id="education_fields" class="form-group col-sm-12">
 </div>
 <div class="form-group col-sm-4">
-<b>Benennung:</b>
+<b>Position:</b>
 </div>
 <div class="form-group col-sm-4">
  <input type="submit" id="addPos" value="+" class="form-control form-control-sm mr-1"> 
@@ -325,8 +325,8 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
 <div id="position_fields" class="form-group col-sm-12">
 </div>
 <div class="form-group col-sm-6">
-<input type="submit"  value="Speichern" class="btn btn-warning btn-sm ml-1">
-<input type="submit" name="cancel" value="Abbrechen" class="btn btn-warning btn-sm ml-1">
+<input type="submit"  value="Add" class="btn btn-warning btn-sm ml-1">
+<input type="submit" name="cancel" value="Cancel" class="btn btn-warning btn-sm ml-1">
 </div>
 </form>
                             </div>
@@ -360,10 +360,10 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
                 
                 $('#education_fields').append(
                     '<div class=row id="education' + countEdu + '"> \
-                    <div class="form-group col-sm-4"> <b>Jahr:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="year1' + countEdu + '" value="" /> </div> \
+                    <div class="form-group col-sm-4"> <b>Year:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="year1' + countEdu + '" value="" /> </div> \
                     <div class="form-group col-sm-2"> <input type="button" value="-" \
                 onclick="$(\'#education' + countEdu + '\').remove();return false;"> </div> \
-                <div class="form-group col-sm-4"><b>Einrichtung:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="school' + countEdu + '" value="" size="50" class="school" /></div> \
+                <div class="form-group col-sm-4"><b>School:</b> </div> <div class="form-group col-sm-6"> <input type="text" class="form-control form-control-sm mr-1" name="school' + countEdu + '" value="" size="50" class="school" /></div> \
             </div>');
             $('.school').autocomplete({ source: "school.php" });
             });
@@ -383,10 +383,10 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
                 window.console && console.log("Adding position " + countPos);
                 $('#position_fields').append(
                     '<div class=row id="position' + countPos + '"> \
-                    <div class="form-group col-sm-4"><b>Jahr:</b></div> <div class="form-group col-sm-6">  <input type="text" class="form-control form-control-sm mr-1" name="year' + countPos + '" value="" /></div> \
+                    <div class="form-group col-sm-4"><b>Year:</b></div> <div class="form-group col-sm-6">  <input type="text" class="form-control form-control-sm mr-1" name="year' + countPos + '" value="" /></div> \
                     <div class="form-group col-sm-2"> <input type="button" value="-" \
                 onclick="$(\'#position' + countPos + '\').remove();return false;"></div> \
-                <div class="form-group col-sm-4"><b>Beschreibung:</b> </div> <div class="form-group col-sm-6"> <textarea class="form-control form-control-sm mr-1" name="desc' + countPos + '" rows="8" cols="80"></textarea></div>\
+                <div class="form-group col-sm-4"><b>Description:</b> </div> <div class="form-group col-sm-6"> <textarea class="form-control form-control-sm mr-1" name="desc' + countPos + '" rows="8" cols="80"></textarea></div>\
             </div>');
             });
         });
@@ -399,18 +399,18 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
                 <div class="col-4 offset-1 col-sm-2">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="./index.php">Startseite</a></li>
-                        <li><a href="./add.php">Lebenslauf hinzufügen</a></li>
-                        <li><a href="./list.php">Lebenslauf Datenbank</a></li>
-                        <li><a href="./contactus.php">Kontaktieren Sie uns</a></li>
+                        <li><a href="./index2.php">Home</a></li>
+                        <li><a href="./add2.php">Add Resume</a></li>
+                        <li><a href="./list2.php">Resume Database</a></li>
+                        <li><a href="./contactus2.php">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="col-7 col-sm-5">
-                    <h5>Unsere Adresse</h5>
+                    <h5>Our Address</h5>
                     <address style="font-size: 100%">
 		             J.-G.-Nathusius-Ring 7<br>
 		              39106, Magdeburg<br>
-		              Deutschland<br>
+		              Germany<br>
                       <i class="fa fa-phone fa-lg"></i>: +4917676497855<br>
                       <i class="fa fa-fax fa-lg"></i>: +492 8765 4321<br>
                       <i class="fa fa-envelope fa-lg"></i>: 
@@ -430,7 +430,7 @@ echo('<div class="container">  <div  class="col-12 col-sm-4 col-md-3 mt5" style=
            </div>
            <div class="row justify-content-center">             
                 <div class="col-auto">
-                    <p>© Urheberrecht 2021 Md Shohanoor Rahman</p>
+                    <p>© Copyright 2021 Md Shohanoor Rahman</p>
                 </div>
            </div>
         </div>
