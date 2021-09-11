@@ -11,7 +11,7 @@ if ( ! isset($_SESSION['name'])   ) {
  
 if ( isset($_POST['cancel'] ) ) {
   // Redirect the browser to login.php
-  header("Location: index.php");
+  header("Location: list.php");
   return;
 }
 
@@ -392,7 +392,7 @@ $f = htmlentities($row['user_id']);
 <div class="form-group col-sm-6">
 <input type="submit"  value="Speichern" onclick="return doValidate();" class="btn btn-warning btn-sm ml-1">
 <input type="submit" name="cancel" value="Abbrechen" class="btn btn-warning btn-sm ml-1">
-</div>
+</div></div></div></div></div></div></div>
 </p>
 </form>
 

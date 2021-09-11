@@ -2,7 +2,7 @@
 
 session_start();
 require_once "pdo.php";
-require_once "head.php";
+
 
 if ( ! isset($_SESSION['name'])   ) {
   $_SESSION['success'] = "Please log in";
@@ -14,7 +14,7 @@ if ( ! isset($_SESSION['name'])   ) {
  
 if ( isset($_POST['cancel'] ) ) {
   // Redirect the browser to login.php
-  header("Location: index2.php");
+  header("Location: list2.php");
   return;
 }
 
@@ -220,7 +220,7 @@ $f = htmlentities($row['user_id']);
 
 ?>
 
-
+<?php require_once "head.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -384,7 +384,7 @@ $f = htmlentities($row['user_id']);
 <div class="form-group col-sm-6">
 <input type="submit"  value="Save" onclick="return doValidate();" class="btn btn-warning btn-sm ml-1">
 <input type="submit" name="cancel" value="Cancel" class="btn btn-warning btn-sm ml-1">
-</div>
+</div></div></div></div></div></div></div>
 </p>
 </form>
 
